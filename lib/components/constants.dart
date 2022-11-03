@@ -137,49 +137,53 @@ Widget divider() {
   );
 }
 
-Widget googleButton() {
-  return Container(
-    height: 50,
-    margin: EdgeInsets.symmetric(vertical: 20),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.all(Radius.circular(10)),
-    ),
-    child: Row(
-      children: <Widget>[
-        Expanded(
-          flex: 1,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Color.fromARGB(241, 177, 45, 45),
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(5), topLeft: Radius.circular(5)),
+Widget googleButton({void Function()? onPressed}) {
+  return InkWell(
+    onTap: onPressed,
+    child: Container(
+      height: 50,
+      margin: EdgeInsets.symmetric(vertical: 20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+      ),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Color.fromARGB(241, 177, 45, 45),
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(5),
+                    topLeft: Radius.circular(5)),
+              ),
+              alignment: Alignment.center,
+              child: Text('G',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w400)),
             ),
-            alignment: Alignment.center,
-            child: Text('G',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    fontWeight: FontWeight.w400)),
           ),
-        ),
-        Expanded(
-          flex: 5,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Color.fromARGB(240, 210, 79, 79),
-              borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(5),
-                  topRight: Radius.circular(5)),
+          Expanded(
+            flex: 5,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Color.fromARGB(240, 210, 79, 79),
+                borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(5),
+                    topRight: Radius.circular(5)),
+              ),
+              alignment: Alignment.center,
+              child: Text('Log in with Google',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400)),
             ),
-            alignment: Alignment.center,
-            child: Text('Log in with Google',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400)),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 }

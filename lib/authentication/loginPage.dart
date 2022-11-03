@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:quiz_app/authentication/signup.dart';
-
+import 'package:google_sign_in/google_sign_in.dart';
 import '../components/constants.dart';
 import '../components/header_animation.dart';
 import '../screens/main_screen.dart';
@@ -20,7 +18,8 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController? emailController = TextEditingController();
   TextEditingController? passwordController = TextEditingController();
   bool visiblePassword = true;
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height / 100000;
@@ -96,7 +95,11 @@ class _LoginPageState extends State<LoginPage> {
                               fontSize: 14, fontWeight: FontWeight.w500)),
                     ),
                     divider(),
-                    googleButton(),
+                    googleButton(
+                      onPressed: () async {
+                        await signInWithGoogle();
+                      },
+                    ),
                     SizedBox(height: height * .055),
                     createAccountLabel(context),
                   ],
@@ -108,5 +111,22 @@ class _LoginPageState extends State<LoginPage> {
         ]),
       ),
     );
+  }
+
+  Future<void> signInWithGoogle() async {
+    GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
+    GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount!.authentication;
+    AuthCredential authCredential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken);
+    UserCredential authResult =
+        await _auth.signInWithCredential(authCredential);
+    User? user = authResult.user;
+    print('user email = ${user!.email}');
+  }
+
+  Future<void> signOut() async {
+    await _googleSignIn.signOut();
   }
 }
